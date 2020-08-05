@@ -39,6 +39,8 @@ dependencies {
     implementation 'com.android.support:design:1.2.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation  'uk.co.chrisjenx:calligraphy:2.3.0'
+    //postgresql
+    implementation 'postgresql:postgresql:9.1-901-1.jdbc4'
 }
 
 // add the Firebase SDK for Google Analytics
