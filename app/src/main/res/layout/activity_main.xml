@@ -14,7 +14,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="30dp"
-        android:onClick="abreNovo"
+        android:onClick="SignIn"
         android:text="Nuevo usuario"
         tools:ignore="HardcodedText" />
 
