@@ -53,7 +53,7 @@ public class main extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(MainActivity.this, "Contraseña incorrecta"+bo, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Contraseña incorrecta"+bo, Toast.LENGTH_SHORT).show();
 
         }
     }

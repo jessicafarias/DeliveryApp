@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:padding="0dp"
+    android:paddingTop="0dp"
     tools:context=".main">
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:layout_marginTop="0dp"
+
+        app:srcCompat="@drawable/background"
+        tools:srcCompat="@drawable/background" />
 
     <Button
         android:id="@+id/buttonNovo"
@@ -16,47 +29,80 @@
         android:layout_marginBottom="30dp"
         android:onClick="SignIn"
         android:text="Nuevo usuario"
+        android:textAllCaps="false"
+        android:background="@drawable/gray_button"
         tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTMainUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/gray_button"
+        android:drawableLeft="@drawable/ic_user"
         android:ems="10"
+        android:fontFamily="@font/poppins"
         android:hint="Nombre"
         android:inputType="textPersonName"
-        tools:ignore="HardcodedText"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:drawablePadding="10dp"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/editTMainContraseña"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        tools:ignore="HardcodedText"
         android:layout_below="@+id/editTMainUsuario"
         android:layout_alignStart="@+id/editTMainUsuario"
-        android:layout_marginTop="11dp" />
+        android:layout_marginTop="11dp"
+        android:background="@drawable/gray_button"
+        android:drawableLeft="@drawable/ic_lock"
+        android:ems="10"
+        android:fontFamily="@font/poppins"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:drawablePadding="10dp"
+        android:paddingStart="10dp"
+
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="47dp"
-        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_above="@+id/editTMainUsuario"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginTop="111dp"
+        android:layout_marginEnd="126dp"
+        android:layout_marginBottom="104dp"
+        app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTMainUsuario"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
-        android:text="KIWI APP" />
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="293dp"
+        android:layout_height="62dp"
+        android:layout_above="@+id/buttonNovo"
+        android:layout_below="@+id/editTMainContraseña"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="61dp"
+        android:layout_marginBottom="87dp"
+        android:background="@drawable/yellow_btn"
+        android:text="Ingresar" />
+
 
 </RelativeLayout>
