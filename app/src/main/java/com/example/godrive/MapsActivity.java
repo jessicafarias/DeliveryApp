@@ -93,6 +93,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         float dis = locA.distanceTo(locB);
 
         Toast.makeText(this, ""+dis+"", Toast.LENGTH_LONG).show();
+        //https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyB1e7npY-O5g3V7Erm4v3I9nM1wTLFBMw8
+        //jsonfile
+
+        //https://developers.google.com/maps/documentation/distance-matrix/overview
+
+        //Volley
+        //https://www.youtube.com/watch?v=YNM_-cR9QKQ
+        //
+        //JUST POLILINE
+        //https://www.youtube.com/watch?v=58AxNh2cWRU
+
+        //Extra: https://www.it-swarm.dev/es/git/como-descartar-cambios-locales-y-obtener-lo-ultimo-del-repositorio-de-github/827022313/
     }
 
     public LatLng getLocation() {
