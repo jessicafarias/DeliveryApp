@@ -3,7 +3,6 @@ package com.example.godrive;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.content.Context;
@@ -22,17 +21,17 @@ import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-//public class CurrentlocationActivity extends AppCompatActivity {
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class CurrentlocationActivity extends AppCompatActivity {
+//public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static  final int REQUEST_LOCATION=1;
+    Button getlocationBtn;
+    TextView showLocationTxt;
 
     LocationManager locationManager;
     String latitude,longitude;
@@ -40,20 +39,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_currentlocation);
 
-        //Add permission
+//Add permission
 
         ActivityCompat.requestPermissions(this,new String[]
                 {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
-        //showLocationTxt=findViewById(R.id.show_location);
-        //getlocationBtn=findViewById(R.id.getLocation);
+        showLocationTxt=findViewById(R.id.show_location);
+        getlocationBtn=findViewById(R.id.getLocation);
         ButtonAction();
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
     public void ButtonAction() {
@@ -61,24 +56,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Check gps is enable or not
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             OnGPS();
-            getLocation();
         } else {
             getLocation();
         }
     }
-    @Override
+    //@Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng sydney = getLocation();
-        //LatLng sydney = new LatLng(getLocation().latitude, getLocation().longitude);
-        //LatLng sydney = new LatLng(-34, 151);
+        LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    public LatLng getLocation() {
+    private void getLocation() {
         //Check Permissions again
-        if (ActivityCompat.checkSelfPermission(MapsActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this,
+        if (ActivityCompat.checkSelfPermission(CurrentlocationActivity.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(CurrentlocationActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) !=PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -95,9 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 latitude=String.valueOf(lat);
                 longitude=String.valueOf(longi);
 
-                //Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
-                LatLng sydney = new LatLng(lat, longi);
-                return sydney;
+                showLocationTxt.setText("Your Location:"+"\n"+"Latitude= "+latitude+"\n"+"Longitude= "+longitude);
             }
             else if (LocationNetwork !=null)
             {
@@ -107,9 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 latitude=String.valueOf(lat);
                 longitude=String.valueOf(longi);
 
-                //Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
-                LatLng sydney = new LatLng(lat, longi);
-                return sydney;
+                showLocationTxt.setText("Your Location:"+"\n"+"Latitude= "+latitude+"\n"+"Longitude= "+longitude);
             }
             else if (LocationPassive !=null)
             {
@@ -118,21 +106,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 latitude=String.valueOf(lat);
                 longitude=String.valueOf(longi);
-                Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
-                //showLocationTxt.setText("Your Location:"+"\n"+"Latitude= "+latitude+"\n"+"Longitude= "+longitude);
-                LatLng sydney = new LatLng(lat, longi);
-                return sydney;
 
-
+                showLocationTxt.setText("Your Location:"+"\n"+"Latitude= "+latitude+"\n"+"Longitude= "+longitude);
             }
             else {
                 Toast.makeText(this, "Can't Get Your Location", Toast.LENGTH_SHORT).show();
-                LatLng sydney = new LatLng(2, 3);
-                return sydney;
             }
         }
-        LatLng sydney = new LatLng(2, 3);
-        return sydney;
     }
     private void OnGPS() {
         final AlertDialog.Builder builder= new AlertDialog.Builder(this);
@@ -151,5 +131,3 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         alertDialog.show();
     }
 }
-
-

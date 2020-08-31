@@ -90,7 +90,7 @@
         android:theme="?attr/actionBarTheme" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/SignIn"
         android:layout_width="293dp"
         android:layout_height="62dp"
         android:layout_above="@+id/buttonNovo"

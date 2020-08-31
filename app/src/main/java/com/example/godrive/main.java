@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ public class main extends AppCompatActivity {
     private Usuario usuario;
     private EditText editTextNombre;
     private EditText editTextContraseña;
+    private Button buttonSignIn;
     int integer;
 
 
@@ -22,6 +24,7 @@ public class main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editTextNombre = (EditText)findViewById(R.id.editTMainUsuario);
         editTextContraseña = (EditText)findViewById(R.id.editTMainContraseña);
+        buttonSignIn = (Button)findViewById(R.id.SignIn);
 
         Intent intent = getIntent();
         if (intent != null){
