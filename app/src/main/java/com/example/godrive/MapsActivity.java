@@ -27,11 +27,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
 //public class CurrentlocationActivity extends AppCompatActivity {
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static  final int REQUEST_LOCATION=1;
@@ -72,17 +73,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng sydney = getLocation();
-        LatLng sydney2 = new LatLng(21.0007277, -89.7047104);
+        LatLng sydney2 = new LatLng(sydney.latitude+0.01, sydney.longitude);
         //LatLng sydney = new LatLng(getLocation().latitude, getLocation().longitude);
         //LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("YOU"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
-        mMap.addMarker(new MarkerOptions().position(sydney2).title("DESTINATION"));
+        mMap.addMarker(new MarkerOptions().position(sydney2).title("DESTINATION").draggable(true));
         CircleOptions circleOptions = new CircleOptions()
                 .center(sydney)
                 .radius(1000); // In meters
         // Get back the mutable Circle
         Circle circle = mMap.addCircle(circleOptions);
+        mMap.setOnMarkerDragListener(this);
 
         Location locA = new Location("punto A");
         Location locB = new Location("punto B");
@@ -180,6 +182,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         final AlertDialog alertDialog=builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+
     }
 }
 
