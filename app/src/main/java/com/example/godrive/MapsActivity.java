@@ -24,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -76,7 +77,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         LatLng sydney2 = new LatLng(sydney.latitude+0.01, sydney.longitude);
         //LatLng sydney = new LatLng(getLocation().latitude, getLocation().longitude);
         //LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.background)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
         mMap.addMarker(new MarkerOptions().position(sydney2).title("DESTINATION").draggable(true));
         CircleOptions circleOptions = new CircleOptions()
