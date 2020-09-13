@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     LocationManager locationManager;
     String latitude,longitude;
 
-    private Marker origin, rider;
+    private Marker origin, destination, driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,9 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         //LatLng sydney = new LatLng(-34, 151);
         origin= mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
-        rider= mMap.addMarker(new MarkerOptions().position(sydney2).draggable(true).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)).title("DESTINATION"));
+        destination= mMap.addMarker(new MarkerOptions().position(sydney2).draggable(true).title("DESTINO"));
+        driver= mMap.addMarker(new MarkerOptions().position(sydney2).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
+
         CircleOptions circleOptions = new CircleOptions()
                 .center(sydney)
                 .radius(1000); // In meters
@@ -91,9 +93,10 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         Location locB = new Location("punto B");
         locA.setLatitude(origin.getPosition().latitude);
         locA.setLongitude(origin.getPosition().longitude);
-        locB.setLatitude(rider.getPosition().latitude);
-        locB.setLongitude(rider.getPosition().longitude);
+        locB.setLatitude(destination.getPosition().latitude);
+        locB.setLongitude(destination.getPosition().longitude);
         dist = locA.distanceTo(locB);
+
 
         Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
         //https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyB1e7npY-O5g3V7Erm4v3I9nM1wTLFBMw8
@@ -201,8 +204,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         Location locB = new Location("punto B");
         locA.setLatitude(origin.getPosition().latitude);
         locA.setLongitude(origin.getPosition().longitude);
-        locB.setLatitude(rider.getPosition().latitude);
-        locB.setLongitude(rider.getPosition().longitude);
+        locB.setLatitude(destination.getPosition().latitude);
+        locB.setLongitude(destination.getPosition().longitude);
         dist = locA.distanceTo(locB);
         Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
     }
