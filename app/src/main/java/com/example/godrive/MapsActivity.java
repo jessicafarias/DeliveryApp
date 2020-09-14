@@ -1,7 +1,7 @@
 package com.example.godrive;
 
+import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -10,34 +10,36 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
 //public class CurrentlocationActivity extends AppCompatActivity {
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static  final int REQUEST_LOCATION=1;
+    float dist;
 
     LocationManager locationManager;
     String latitude,longitude;
+
+    private Marker origin, destination, driver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,27 +74,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng sydney = getLocation();
-        LatLng sydney2 = new LatLng(21.0007277, -89.7047104);
+        LatLng sydney2 = new LatLng(sydney.latitude+0.01, sydney.longitude);
         //LatLng sydney = new LatLng(getLocation().latitude, getLocation().longitude);
         //LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("YOU"));
+        origin= mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
-        mMap.addMarker(new MarkerOptions().position(sydney2).title("DESTINATION"));
+        destination= mMap.addMarker(new MarkerOptions().position(sydney2).draggable(true).title("DESTINO"));
+        driver= mMap.addMarker(new MarkerOptions().position(sydney2).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
+
         CircleOptions circleOptions = new CircleOptions()
                 .center(sydney)
                 .radius(1000); // In meters
         // Get back the mutable Circle
         Circle circle = mMap.addCircle(circleOptions);
+        mMap.setOnMarkerDragListener(this);
 
         Location locA = new Location("punto A");
         Location locB = new Location("punto B");
-        locA.setLatitude(sydney.latitude);
-        locA.setLongitude(sydney.longitude);
-        locB.setLatitude(sydney2.latitude);
-        locB.setLongitude(sydney2.longitude);
-        float dis = locA.distanceTo(locB);
+        locA.setLatitude(origin.getPosition().latitude);
+        locA.setLongitude(origin.getPosition().longitude);
+        locB.setLatitude(destination.getPosition().latitude);
+        locB.setLongitude(destination.getPosition().longitude);
+        dist = locA.distanceTo(locB);
 
-        Toast.makeText(this, ""+dis+"", Toast.LENGTH_LONG).show();
+
+        Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
         //https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=AIzaSyB1e7npY-O5g3V7Erm4v3I9nM1wTLFBMw8
         //jsonfile
 
@@ -180,6 +186,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
         final AlertDialog alertDialog=builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        Location locA = new Location("punto A");
+        Location locB = new Location("punto B");
+        locA.setLatitude(origin.getPosition().latitude);
+        locA.setLongitude(origin.getPosition().longitude);
+        locB.setLatitude(destination.getPosition().latitude);
+        locB.setLongitude(destination.getPosition().longitude);
+        dist = locA.distanceTo(locB);
+        Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
     }
 }
 
