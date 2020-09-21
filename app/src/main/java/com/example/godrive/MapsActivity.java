@@ -17,6 +17,13 @@ import android.provider.Settings;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,6 +35,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 //public class CurrentlocationActivity extends AppCompatActivity {
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
@@ -36,18 +47,25 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     private static  final int REQUEST_LOCATION=1;
     float dist;
 
+    private RequestQueue queue;
+
+
     LocationManager locationManager;
     String latitude,longitude;
 
     private Marker origin, destination, driver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //Add permission
+        ////////////////////////////////// Instantiate the RequestQueue.
+       queue = Volley.newRequestQueue(this);
+        //////////////////////////////////
 
+        //Add permission
         ActivityCompat.requestPermissions(this,new String[]
                 {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
@@ -133,6 +151,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
                 longitude=String.valueOf(longi);
 
                 //Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
+
                 LatLng sydney = new LatLng(lat, longi);
                 return sydney;
             }
@@ -190,7 +209,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
 
     @Override
     public void onMarkerDragStart(Marker marker) {
-
+        JsonParse();
     }
 
     @Override
@@ -208,6 +227,36 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         locB.setLongitude(destination.getPosition().longitude);
         dist = locA.distanceTo(locB);
         Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
+    }
+
+    private void JsonParse()    {
+        String url = "https://my-json-server.typicode.com/jessicafarias/DeliveryApp/db";
+
+        /////////////////////////////// Request a string response from the provided URL.
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonarray =response.getJSONArray("empleado");
+                            for (int i =0 ; i< jsonarray.length(); i++){
+                                JSONObject empleado = jsonarray.getJSONObject(i);
+                                String name = empleado.getString("name");
+                                Toast.makeText(MapsActivity.this, ""+name+"", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MapsActivity.this, "That didn't work!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        ////////////////////////////////
+        queue.add(request);
+
     }
 }
 
