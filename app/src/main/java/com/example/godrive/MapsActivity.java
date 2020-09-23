@@ -51,7 +51,7 @@ import java.util.List;
 //public class CurrentlocationActivity extends AppCompatActivity {
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
-    private GoogleMap mMap, mMap2;
+    private GoogleMap mMap;
     private static  final int REQUEST_LOCATION=1;
     float dist;
 
@@ -125,22 +125,29 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         Geocoder geo = new Geocoder(this);
         List<Address> adress = null;
         try {
+            //Agregar todos los carros activos de la base de datos
             adress = geo.getFromLocationName(EditTextfind.getText().toString(),1,
                     1,1,1,1);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LatLng jmf = new LatLng(adress.get(0).getLatitude(), adress.get(0).getLongitude());
-
-        extra= mMap.addMarker(new MarkerOptions().position(jmf).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
+        if (adress.size() >0) {
+            LatLng jmf = new LatLng(adress.get(0).getLatitude(), adress.get(0).getLongitude());
+            extra = mMap.addMarker(new MarkerOptions().position(jmf).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
+        }
     }
 
     public void ChangeDestination() throws IOException {
         Geocoder geo = new Geocoder(this);
         List<Address> adress = null;
         try {
-            adress = geo.getFromLocationName(EditTextfind.getText().toString(),1,
-                    1,1,1,1);
+            adress = geo.getFromLocationName(EditTextfind.getText().toString()+" isla mujeres", 1,
+                    1, 1, 1, 1);
+
+            if (adress.size() == 0) {
+                adress = geo.getFromLocationName(EditTextfind.getText().toString(),1,
+                        1,1,1,1);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -149,6 +156,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         if (adress.size() >0){
             jmf = new LatLng(adress.get(0).getLatitude(), adress.get(0).getLongitude());
             destination.setPosition(jmf);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jmf, 16));
         }
         else{
             Toast.makeText(this,"No se encontró resultado", Toast.LENGTH_SHORT).show();
@@ -164,30 +172,16 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         if (sydney2==null){
             sydney2 = new LatLng(sydney.latitude+0.01, sydney.longitude);
         }
-        //LatLng sydney = new LatLng(getLocation().latitude, getLocation().longitude);
-        //LatLng sydney = new LatLng(-34, 151);
         origin= mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
-
         driver= mMap.addMarker(new MarkerOptions().position(sydney2).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
         destination= mMap.addMarker(new MarkerOptions().position(sydney2).draggable(true).title("DESTINO"));
 
-
         CircleOptions circleOptions = new CircleOptions()
                 .center(sydney)
-                .radius(1000); // In meters
-        // Get back the mutable Circle
+                .radius(1000); // In meters Get back the mutable Circle
         Circle circle = mMap.addCircle(circleOptions);
         mMap.setOnMarkerDragListener(this);
-
-
-        //Location locA = new Location("punto A");
-        //Location locB = new Location("punto B");
-        //locA.setLatitude(origin.getPosition().latitude);
-        //locA.setLongitude(origin.getPosition().longitude);
-        //locB.setLatitude(destination.getPosition().latitude);
-        //locB.setLongitude(destination.getPosition().longitude);
-        //dist = locA.distanceTo(locB);
 
     }
 
@@ -202,40 +196,21 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
             Location LocationGps= locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             Location LocationNetwork=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             Location LocationPassive=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-            if (LocationGps !=null)
-            {
+            if (LocationGps !=null){
                 double lat=LocationGps.getLatitude();
                 double longi=LocationGps.getLongitude();
-
-                latitude=String.valueOf(lat);
-                longitude=String.valueOf(longi);
-
-                //Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
-
                 LatLng sydney = new LatLng(lat, longi);
                 return sydney;
             }
-            else if (LocationNetwork !=null)
-            {
+            else if (LocationNetwork !=null){
                 double lat=LocationNetwork.getLatitude();
                 double longi=LocationNetwork.getLongitude();
-
-                latitude=String.valueOf(lat);
-                longitude=String.valueOf(longi);
-
-                //Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
                 LatLng sydney = new LatLng(lat, longi);
                 return sydney;
             }
-            else if (LocationPassive !=null)
-            {
+            else if (LocationPassive !=null){
                 double lat=LocationPassive.getLatitude();
                 double longi=LocationPassive.getLongitude();
-
-                latitude=String.valueOf(lat);
-                longitude=String.valueOf(longi);
-                Toast.makeText(this, ""+latitude+longitude+"", Toast.LENGTH_SHORT).show();
-                //showLocationTxt.setText("Your Location:"+"\n"+"Latitude= "+latitude+"\n"+"Longitude= "+longitude);
                 LatLng sydney = new LatLng(lat, longi);
                 return sydney;
 
@@ -252,7 +227,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     }
     private void OnGPS() {
         final AlertDialog.Builder builder= new AlertDialog.Builder(this);
-        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        builder.setMessage("Activar GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
@@ -286,13 +261,12 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         locB.setLatitude(destination.getPosition().latitude);
         locB.setLongitude(destination.getPosition().longitude);
         dist = locA.distanceTo(locB);
-        //Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
 
     }
 
     private void JsonParse()    {
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=40.6655101,-73.89188969999998&destinations=40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.6905615%2C-73.9976592%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626%7C40.659569%2C-73.933783%7C40.729029%2C-73.851524%7C40.6860072%2C-73.6334271%7C40.598566%2C-73.7527626&key=AIzaSyB1e7npY-O5g3V7Erm4v3I9nM1wTLFBMw8";
-
         /////////////////////////////// Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
