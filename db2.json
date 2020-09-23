@@ -1,6 +1,6 @@
 {
-    "status":"OK",
-    "origin_addresses":[
+    "status":"OK",//GET JSON STRING
+    "origin_addresses":[//GET JSON ARRAY
        "Vancouver, BC, Canada",
        "Seattle, État de Washington, États-Unis"
     ],
@@ -8,10 +8,10 @@
        "San Francisco, Californie, États-Unis",
        "Victoria, BC, Canada"
     ],
-    "rows":[
-       {
-          "elements":[
-             {
+    "rows":[ //GET JSON ARRAY
+       {//GET JSON OBJECT
+          "elements":[ //GET JSON ARRAY
+             { ///GET JSON OBJECT
                 "status":"OK",
                 "duration":{
                    "value":340110,
