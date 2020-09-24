@@ -1,7 +1,7 @@
 {
-  "empleado": [
-    {
-      "name": "jessica",
+  "empleado": [ //GET JSON ARRAY
+    { //GET KSON OBJECT
+      "name": "jessica", //GET JSON STRING
       "username": "jess",
       "age": 26
     }
