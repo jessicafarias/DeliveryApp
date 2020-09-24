@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 public class DB extends _Default implements Runnable {
 
     private Connection conn;
-    private String host = "fdb24.awardspace.net";
-    private String db = "3328198_db";
+    private String host = "host";
+    private String db = "db";
     private int port = 3306;
-    private String user = "3328198_db";
-    private String pass = "125789jJ";
+    private String user = "3b";
+    private String pass = "123456";
     private String url = "jdbc:postgresql://%s:%d/%s";
 
     public DB() {
