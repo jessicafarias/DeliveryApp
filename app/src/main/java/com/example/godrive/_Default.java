@@ -1,6 +1,5 @@
 package com.example.godrive;
 
-
 public class _Default {
     protected String _mensagem;
     protected boolean _status;

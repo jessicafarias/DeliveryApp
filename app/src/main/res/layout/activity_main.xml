@@ -20,17 +20,17 @@
         tools:srcCompat="@drawable/background" />
 
     <Button
-        android:id="@+id/buttonNovo"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:onClick="SignIn"
+        android:background="@drawable/gray_button"
+        android:onClick="Register"
         android:text="Nuevo usuario"
         android:textAllCaps="false"
-        android:background="@drawable/gray_button"
         tools:ignore="HardcodedText" />
 
     <EditText
@@ -40,13 +40,13 @@
         android:layout_centerInParent="true"
         android:background="@drawable/gray_button"
         android:drawableLeft="@drawable/ic_user"
+        android:drawablePadding="10dp"
         android:ems="10"
         android:fontFamily="@font/poppins"
-        android:hint="Nombre"
+        android:hint="Telefono"
         android:inputType="textPersonName"
         android:paddingStart="10dp"
         android:paddingLeft="10dp"
-        android:drawablePadding="10dp"
         tools:ignore="HardcodedText" />
 
     <EditText
@@ -93,7 +93,7 @@
         android:id="@+id/SignIn"
         android:layout_width="293dp"
         android:layout_height="62dp"
-        android:layout_above="@+id/buttonNovo"
+        android:layout_above="@+id/btnRegister"
         android:layout_below="@+id/editTMainContraseña"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -102,6 +102,7 @@
         android:layout_marginEnd="61dp"
         android:layout_marginBottom="87dp"
         android:background="@drawable/yellow_btn"
+        android:onClick="SignIn"
         android:text="Ingresar" />
 
 
