@@ -1,17 +1,18 @@
 package com.example.godrive;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 
-public class DB extends _Default implements Runnable {
+public class DB extends _Default implements Runnable{
 
     private Connection conn;
-    private String host = "fdb24.awardspace.net";
-    private String db = "3328198_db";
-    private int port = 3306;
-    private String user = "3328198_db";
-    private String pass = "125789jJ";
+    private String host = "otto.db.elephantsql.com";
+    private String db = "wscjqhpz";
+    private int port = 5432;
+    private String user = "wscjqhpz";
+    private String pass = "F_nvM0-Ndv1c3iDvnQiRsvSKZWUvGsAJ";
     private String url = "jdbc:postgresql://%s:%d/%s";
 
     public DB() {

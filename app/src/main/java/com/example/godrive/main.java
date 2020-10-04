@@ -10,11 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class main extends AppCompatActivity {
-
-    private Usuario usuario;
+    Usuario usuario = new Usuario();
     private EditText editTextNombre;
     private EditText editTextContraseña;
-    private Button buttonSignIn;
+    private Button btnSignIn, btnRegister;
     int integer;
 
 
@@ -24,7 +23,8 @@ public class main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editTextNombre = (EditText)findViewById(R.id.editTMainUsuario);
         editTextContraseña = (EditText)findViewById(R.id.editTMainContraseña);
-        buttonSignIn = (Button)findViewById(R.id.SignIn);
+        btnSignIn = (Button)findViewById(R.id.SignIn);
+        btnRegister = (Button) findViewById(R.id.btnRegister) ;
 
         Intent intent = getIntent();
         if (intent != null){
@@ -38,34 +38,24 @@ public class main extends AppCompatActivity {
     }
 
     public void SignIn(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
-
-    public void OpenList(View view){
-        integer = usuario.NameExist(editTextNombre.getText().toString(), editTextContraseña.getText().toString());
-        if(integer !=0){
-            //if(true)
-
+        integer = usuario.GetIdRegisteredUser(editTextNombre.getText().toString(), editTextContraseña.getText().toString());
+        if (integer != 0) {
             Toast.makeText(main.this, "Bienvenenido :)", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
-            intent.putExtra("ContraseñaMain", editTextContraseña.getText() .toString());
-            intent.putExtra("IDUSUARIO",integer);
+            //intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
+            //intent.putExtra("ContraseñaMain", editTextContraseña.getText().toString());
+            intent.putExtra("IDUSUARIO", integer);
             startActivity(intent);
-        }
-        else
-        {
-            //Toast.makeText(MainActivity.this, "Contraseña incorrecta"+bo, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(main.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
 
         }
     }
 
-    public void abreLista(View view){
-        //this.usuario.setNombre(this.editTextNombre.getText().toString());
-        //this.usuario.setContra(this.editTextContras.getText().toString());
-        //boolean bo = this.usuario.sal("socio");
-
+    public void Register(View view) {
+        Intent intent = new Intent(this, Registration.class);
+        startActivity(intent);
 
     }
+
 }
