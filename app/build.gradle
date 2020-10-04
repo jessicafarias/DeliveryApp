@@ -34,10 +34,15 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
+    //ReciclerView
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
     //Autentification
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     //Database
     implementation 'com.google.firebase:firebase-database:19.3.1'
+
+    //SDK REALTIME
+    implementation 'com.google.firebase:firebase-database:19.4.0'
     //SupportDesign
     implementation 'com.android.support:design:1.2.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'

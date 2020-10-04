@@ -16,20 +16,23 @@
 
     <Button
         android:id="@+id/BtnMarkerDestination"
-        android:layout_width="157dp"
+        android:layout_width="wrap_content"
         android:layout_height="62dp"
+        android:layout_marginTop="609dp"
         android:layout_marginBottom="60dp"
-        android:text="Buscar"
+        android:text="IR A"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintStart_toEndOf="@+id/editTextfind" />
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toEndOf="@+id/editTextfind"
+        app:layout_constraintTop_toTopOf="@+id/map"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/RequestDriver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="checkOut"
+        android:onClick="FindCalitaxi"
         android:text="Pedir calitaxi"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         tools:layout_editor_absoluteX="16dp" />
@@ -46,8 +49,8 @@
 
     <EditText
         android:id="@+id/editTextfind"
-        android:layout_width="223dp"
-        android:layout_height="65dp"
+        android:layout_width="293dp"
+        android:layout_height="58dp"
         android:layout_marginStart="16dp"
         android:layout_marginBottom="60dp"
         android:ems="10"

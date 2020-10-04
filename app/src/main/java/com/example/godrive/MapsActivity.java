@@ -293,6 +293,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         queue.add(request);
 
     }
+
+    public void FindCalitaxi(View view) {
+        Intent intent = new Intent(this, waitActivity.class);
+        startActivity(intent);
+    }
 }
 
 
