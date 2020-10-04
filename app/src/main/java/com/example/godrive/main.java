@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class main extends AppCompatActivity {
-
+    Usuario usuario = new Usuario();
     private EditText editTextNombre;
     private EditText editTextContraseña;
     private Button btnSignIn, btnRegister;
@@ -38,20 +38,18 @@ public class main extends AppCompatActivity {
     }
 
     public void SignIn(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-                /*integer = usuario.NameExist(editTextNombre.getText().toString(), editTextContraseña.getText().toString());
+        integer = usuario.GetIdRegisteredUser(editTextNombre.getText().toString(), editTextContraseña.getText().toString());
         if (integer != 0) {
             Toast.makeText(main.this, "Bienvenenido :)", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MapsActivity.class);
-            intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
-            intent.putExtra("ContraseñaMain", editTextContraseña.getText().toString());
+            //intent.putExtra("UsuarioMain", editTextNombre.getText().toString());
+            //intent.putExtra("ContraseñaMain", editTextContraseña.getText().toString());
             intent.putExtra("IDUSUARIO", integer);
             startActivity(intent);
         } else {
             Toast.makeText(main.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
 
-        }*/
+        }
     }
 
     public void Register(View view) {

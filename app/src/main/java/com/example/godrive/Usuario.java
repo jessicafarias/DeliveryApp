@@ -44,19 +44,16 @@ public class Usuario extends _Default {
         DB db = new DB();
         int ter = 0;
         try {
-            ResultSet resultSet = db.select(String.format("select*from usuarios WHERE telefono = %s", telefono));
+            ResultSet resultSet = db.select(String.format("select*from usuarios WHERE telefono = '%s'", telefono));
             if (resultSet != null){
                 while (resultSet.next()){
                     Usuario obj = new Usuario();
                     obj.setId(resultSet.getInt("id_usuario"));
-                    obj.setTelefone(resultSet.getString("telefono"));
-                    obj.setPassword(resultSet.getString("constraseña"));
 
-                    if ((Objects.equals(telefono, obj.getTelefono()))
-                            && (Objects.equals(password,obj.getPassword())))
+                    if (Objects.equals(password,resultSet.getString("contraseña")))
                     {
                         ter=obj.getId();
-                        break;
+                        return ter;
                     }
                 }
             }
