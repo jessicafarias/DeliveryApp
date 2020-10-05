@@ -16,26 +16,28 @@
 
     <Button
         android:id="@+id/BtnMarkerDestination"
-        android:layout_width="wrap_content"
-        android:layout_height="62dp"
-        android:layout_marginTop="609dp"
-        android:layout_marginBottom="60dp"
+        android:layout_width="80dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/yellow_btn"
         android:text="IR A"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/RequestDriver"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toEndOf="@+id/editTextfind"
         app:layout_constraintTop_toTopOf="@+id/map"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.97" />
 
     <Button
         android:id="@+id/RequestDriver"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/yellow_btn"
         android:onClick="FindCalitaxi"
         android:text="Pedir calitaxi"
         app:layout_constraintBottom_toBottomOf="@+id/map"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="20dp" />
 
     <Switch
         android:id="@+id/Switch"

@@ -18,10 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".waitActivity"></activity>
+        <activity android:name=".main"></activity>
+        <activity android:name=".waitActivity" />
         <activity android:name=".Registration" />
         <activity android:name=".CurrentlocationActivity" />
-        <activity android:name=".main">
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,6 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+
+import java.util.concurrent.TimeUnit;
+
 public class Registration extends AppCompatActivity {
     Usuario user;
     private EditText editTextNombre;
@@ -63,5 +69,25 @@ public class Registration extends AppCompatActivity {
             Toast.makeText(this, "Contraseña de confirmación incorrecta",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+
+
+    private void verifyCode(String code) {
+        //PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        //signInWithCredential(credential);
+    }
+
+    private void sendVerificationCode(String number) {
+        //progressBar.setVisibility(View.VISIBLE);
+        //PhoneAuthProvider.getInstance().verifyPhoneNumber(
+        //        number,
+        //        60,
+        //        TimeUnit.SECONDS,
+        //        TaskExecutors.MAIN_THREAD,
+        //        mCallBack
+        //);
+
+        //progressBar.setVisibility(View.GONE);
     }
 }
