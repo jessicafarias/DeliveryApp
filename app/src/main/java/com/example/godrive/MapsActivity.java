@@ -48,14 +48,14 @@ import java.io.IOException;
 import java.util.List;
 
 
-//public class CurrentlocationActivity extends AppCompatActivity {
+
 public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarkerDragListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static  final int REQUEST_LOCATION=1;
     float dist;
 
-    LatLng sydney2, sydney, jmf;
+    LatLng sydney,sydney2, jmf;
 
     private RequestQueue queue;
 
@@ -68,9 +68,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     private Button BtnMarkerDestination;
     private EditText EditTextfind;
 
-    //
-
-    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +169,8 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
         if (sydney2==null){
             sydney2 = new LatLng(sydney.latitude+0.01, sydney.longitude);
         }
-        origin= mMap.addMarker(new MarkerOptions().position(sydney).title("YOU").draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+        origin= mMap.addMarker(new MarkerOptions().position(sydney)
+                .title("YOU").draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,13));
         driver= mMap.addMarker(new MarkerOptions().position(sydney2).icon(BitmapDescriptorFactory.fromResource(R.drawable.car)));
         destination= mMap.addMarker(new MarkerOptions().position(sydney2).draggable(true).title("DESTINO"));
@@ -256,11 +254,16 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     public void onMarkerDragEnd(Marker marker) {
         Location locA = new Location("punto A");
         Location locB = new Location("punto B");
+
         locA.setLatitude(origin.getPosition().latitude);
         locA.setLongitude(origin.getPosition().longitude);
+
+
         locB.setLatitude(destination.getPosition().latitude);
         locB.setLongitude(destination.getPosition().longitude);
-        dist = locA.distanceTo(locB);
+
+        dist = (locA.distanceTo(locB)/1000)*10+50;
+        sydney = new LatLng(origin.getPosition().latitude, origin.getPosition().longitude);
         Toast.makeText(this, ""+dist+"", Toast.LENGTH_LONG).show();
 
     }
@@ -295,7 +298,24 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
     }
 
     public void FindCalitaxi(View view) {
+        Location locA = new Location("punto A");
+        Location locB = new Location("punto B");
+
+        locA.setLatitude(origin.getPosition().latitude);
+        locA.setLongitude(origin.getPosition().longitude);
+
+
+        locB.setLatitude(destination.getPosition().latitude);
+        locB.setLongitude(destination.getPosition().longitude);
+        dist = (locA.distanceTo(locB)/1000)*5+50;
+
         Intent intent = new Intent(this, waitActivity.class);
+        sydney = new LatLng(origin.getPosition().latitude, origin.getPosition().longitude);
+        sydney2 = new LatLng(destination.getPosition().latitude, destination.getPosition().longitude);
+
+
+        intent.putExtra("latitude",sydney.latitude);
+        intent.putExtra("longitude",dist);
         startActivity(intent);
     }
 }

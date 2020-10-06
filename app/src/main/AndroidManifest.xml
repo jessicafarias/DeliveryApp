@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".main"></activity>
+        <activity android:name=".VerifyPhoneActivity"></activity>
+        <activity android:name=".main" />
         <activity android:name=".waitActivity" />
         <activity android:name=".Registration" />
         <activity android:name=".CurrentlocationActivity" />

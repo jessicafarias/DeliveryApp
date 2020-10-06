@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class main extends AppCompatActivity {
     Usuario usuario = new Usuario();
     private EditText editTextNombre;
@@ -56,6 +58,18 @@ public class main extends AppCompatActivity {
         Intent intent = new Intent(this, Registration.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
+            Intent intent = new Intent(this, MapsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        }
     }
 
 }

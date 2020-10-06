@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
@@ -22,7 +23,7 @@ public class Registration extends AppCompatActivity {
     private EditText editTextNombre;
     private EditText editTextPhone;
     private EditText Password;
-    private EditText Password2;
+    private EditText Password2,editTextCountryCode;
 
 
     @Override
@@ -33,6 +34,7 @@ public class Registration extends AppCompatActivity {
         editTextPhone = (EditText)findViewById(R.id.editTextPhone);
         Password = (EditText)findViewById(R.id.editextPasword);
         Password2 = (EditText)findViewById(R.id.editextConfirm);
+        editTextCountryCode = findViewById(R.id.editTextCountryCode);
         editTextPhone.setFilters(new InputFilter[] {new InputFilter.LengthFilter(10)});
     }
 
@@ -47,47 +49,29 @@ public class Registration extends AppCompatActivity {
         if(password.equals(password2)) {
             if(TextUtils.isEmpty(name)) {
                 editTextNombre.setError("Agrega un nombre válido");
+                editTextNombre.requestFocus();
                 return;
             }
-            else if(TextUtils.isEmpty(phone)) {
+            else if(TextUtils.isEmpty(phone)||phone.length()!=10) {
                 editTextPhone.setError("Agrega 10 dígitos");
+                editTextPhone.requestFocus();
                 return;
             }
             else {
-                try {
-                    int a = Integer.parseInt(this.user.UserMax());
-                    this.user.NewUser(a, name, password, phone, false, 1);
-                    Toast.makeText(this,"NUEVO USUARIO CREADO", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    String error =e.getMessage();
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                String code = editTextCountryCode.getText().toString().trim();
+                String number = editTextPhone.getText().toString().trim();
+                String phoneNumber = code + number;
+                Intent intent = new Intent(Registration.this, VerifyPhoneActivity.class);
+                intent.putExtra("phoneNumber", phoneNumber);
+                intent.putExtra("password", Password.getText().toString());
+                intent.putExtra("name", editTextNombre.getText().toString());
+                password = getIntent().getStringExtra("password");
+                name = getIntent().getStringExtra("name");
+                startActivity(intent);
             }
         }
         else {
             Toast.makeText(this, "Contraseña de confirmación incorrecta",Toast.LENGTH_LONG).show();
         }
-
-    }
-
-
-
-    private void verifyCode(String code) {
-        //PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        //signInWithCredential(credential);
-    }
-
-    private void sendVerificationCode(String number) {
-        //progressBar.setVisibility(View.VISIBLE);
-        //PhoneAuthProvider.getInstance().verifyPhoneNumber(
-        //        number,
-        //        60,
-        //        TimeUnit.SECONDS,
-        //        TaskExecutors.MAIN_THREAD,
-        //        mCallBack
-        //);
-
-        //progressBar.setVisibility(View.GONE);
     }
 }
