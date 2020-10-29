@@ -216,11 +216,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMarker
             }
             else {
                 Toast.makeText(this, "Can't Get Your Location", Toast.LENGTH_SHORT).show();
-                LatLng sydney = new LatLng(2, 3);
+                LatLng sydney = new LatLng(21.2425439, -86.7726262);
                 return sydney;
             }
         }
-        LatLng sydney = new LatLng(2, 3);
+        LatLng sydney = new LatLng(21.2425439, -86.7726262);
         return sydney;
     }
     private void OnGPS() {
